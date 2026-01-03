@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soares JM | Design & AI Analyst</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    /* --- Base Styles --- */
+    :root {
+      --gold: #D4AF37;
+      --gold-dark: #B8962E;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --text-main: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    /* --- Background --- */
+    .bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url('https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+
+    .bg-darken {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    /* --- Glassmorphism Container --- */
+    .glass-card {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 40px;
+      padding: 32px 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* --- Profile Section --- */
+    .profile-photo-wrapper {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .profile-photo {
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      padding: 4px;
+      background: rgba(0, 0, 0, 0.5);
+      object-fit: cover;
+    }
+
+    .verified-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: var(--gold);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      color: #000;
+      font-size: 12px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .role {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+
+    .bio {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 280px;
+      margin-bottom: 32px;
+    }
+
+    /* --- Action Buttons Grid --- */
+    .button-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .action-btn {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .action-btn i {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .action-btn span {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .action-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Specific Icon Colors */
+    .btn-whatsapp i { color: #4ade80; }
+    .btn-location i { color: #60a5fa; }
+    .btn-email i { color: #c084fc; }
+    .btn-web i { color: #fbbf24; }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* --- Save Contact Button --- */
+    .save-btn {
+      width: 100%;
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+      margin-bottom: 40px;
+    }
+
+    .save-btn:hover {
+      background: var(--gold-dark);
+    }
+
+    .save-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* --- Featured Project --- */
+    .featured-section {
+      width: 100%;
+      text-align: left;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 16px;
+      height: 1px;
+      background: rgba(212, 175, 55, 0.5);
+    }
+
+    .project-card {
+      position: relative;
+      display: block;
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      opacity: 0.7;
+      transition: transform 0.6s ease;
+    }
+
+    .project-card:hover .project-img {
+      transform: scale(1.05);
+    }
+
+    .project-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .project-name {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-tags {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .project-btn {
+      padding: 6px 12px;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* --- Footer --- */
+    .social-footer {
+      display: flex;
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .social-link {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 20px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      color: var(--gold);
+      transform: translateY(-3px) scale(1.2);
+    }
+
+    .copyright {
+      margin-top: 32px;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+</head>
+<body>
+
+  <div class="bg-overlay">
+    <div class="bg-darken"></div>
+  </div>
+
+  <main class="glass-card animate-fade-in">
+    <!-- Profile -->
+    <div class="profile-photo-wrapper">
+      <img src="https://scontent.fmpm1-1.fna.fbcdn.net/v/t39.30808-6/455448373_10218652058560395_1797305952875151241_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=WkUjS6D-4x4Q7kNvgFYvY0N&_nc_zt=23&_nc_ht=scontent.fmpm1-1.fna&oh=00_AYC5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5&oe=67BE5X5X" alt="Soares JM" class="profile-photo">
+      <div class="verified-badge">
+        <i class="fas fa-check"></i>
+      </div>
+    </div>
+
+    <h1>Soares JM</h1>
+    <div class="role">Web & Graphic Designer | Analista de IA</div>
+    <p class="bio">"Unindo a estética do design de alto padrão com o poder da inteligência artificial para criar experiências digitais exclusivas."</p>
+
+    <!-- Buttons -->
+    <div class="button-grid">
+      <a href="https://api.whatsapp.com/send?phone=258848865961" target="_blank" class="action-btn btn-whatsapp">
+        <i class="fab fa-whatsapp"></i>
+        <span>WhatsApp</span>
+      </a>
+      <a href="https://www.google.com/maps/place/5G4Q%2BXR6+SOARES+JM,+Matola/@-25.8389522,32.5409324,15z/data=!4m6!3m5!1s0x1ee69307307687b3:0xadd16f56e8a0216f!8m2!3d-25.8425891!4d32.5395303!16s%2Fg%2F11j84xm3_g" target="_blank" class="action-btn btn-location">
+        <i class="fas fa-location-dot"></i>
+        <span>Endereço</span>
+      </a>
+      <a href="mailto:soares.m15@gmail.com" class="action-btn btn-email">
+        <i class="far fa-envelope"></i>
+        <span>E-mail</span>
+      </a>
+      <a href="https://www.soaresjm.rf.gd" target="_blank" class="action-btn btn-web">
+        <i class="fas fa-globe"></i>
+        <span>Portfólio</span>
+      </a>
+    </div>
+
+    <!-- Save Contact -->
+    <button class="save-btn" onclick="downloadVCard()">
+      <i class="fas fa-id-card"></i>
+      Salvar Contato
+    </button>
+
+    <!-- Project Highlight -->
+    <div class="featured-section">
+      <h3 class="section-title">Projeto em Destaque</h3>
+      <a href="https://www.kasadigitalmoz.com" target="_blank" class="project-card">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Kasa Digital Moz" class="project-img">
+        <div class="project-info">
+          <div class="project-name">Kasa Digital Moz</div>
+          <div class="project-meta">
+            <span class="project-tags">Plataforma Digital • Inovação</span>
+            <span class="project-btn">Acessar Site</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Social -->
+    <div class="social-footer">
+      <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.facebook.com/soares.jm" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+    </div>
+
+    <div class="copyright">
+      &copy; 2025 Soares JM • Design & AI Studio
+    </div>
+  </main>
+
+  <script>
+    /**
+     * Simulation of vCard download
+     */
+    function downloadVCard() {
+      const vcardData = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'FN:Soares JM',
+        'ORG:Design & AI Studio',
+        'TITLE:Web & Graphic Designer | Analista de IA',
+        'TEL;TYPE=CELL:+258848865961',
+        'EMAIL:soares.m15@gmail.com',
+        'URL:https://www.soaresjm.rf.gd',
+        'END:VCARD'
+      ].join('\n');
+
+      const blob = new Blob([vcardData], { type: 'text/vcard' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Soares_JM.vcf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
